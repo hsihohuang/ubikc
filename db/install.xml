@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/ubikc/db" VERSION="20121010" COMMENT="XMLDB file for Moodle mod/ubikc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="ubikc" COMMENT="U-KC learning" NEXT="ubikc_englishword">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Course ubikc activity belongs to" PREVIOUS="id" NEXT="instanceid"/>
+        <FIELD NAME="instanceid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="course module id" PREVIOUS="course" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances" PREVIOUS="instanceid" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the ubikc activity" PREVIOUS="name" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timeavailable"/>
+        <FIELD NAME="timeavailable" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="introformat" NEXT="timedue"/>
+        <FIELD NAME="timedue" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timeavailable" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timedue" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated" NEXT="examtime"/>
+        <FIELD NAME="examtime" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="考試時間" PREVIOUS="timemodified" NEXT="kcrevision"/>
+        <FIELD NAME="kcrevision" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="incremented when after each file changes, solves browser caching issues" PREVIOUS="examtime"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="instanceid"/>
+        <KEY NAME="instanceid" TYPE="foreign-unique" FIELDS="instanceid" REFTABLE="mdl_course_modules" REFFIELDS="id" COMMENT="mdl_course_modules id" PREVIOUS="primary"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="ubikc_englishword" COMMENT="Defines ubikc_englishword" PREVIOUS="ubikc" NEXT="ubikc_wordexplanation">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="ubikcid"/>
+        <FIELD NAME="ubikcid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="english"/>
+        <FIELD NAME="english" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="英文單字" PREVIOUS="ubikcid" NEXT="partofspeech"/>
+        <FIELD NAME="partofspeech" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="詞性" PREVIOUS="english" NEXT="chinese"/>
+        <FIELD NAME="chinese" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="中文意思" PREVIOUS="partofspeech"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="ubikcid"/>
+        <KEY NAME="ubikcid" TYPE="foreign" FIELDS="ubikcid" REFTABLE="ubikc" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="ubikc_wordexplanation" COMMENT="Defines ubikc_wordexplanation" PREVIOUS="ubikc_englishword" NEXT="ubikc_questionbank">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="ubikcid"/>
+        <FIELD NAME="ubikcid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="word"/>
+        <FIELD NAME="word" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" PREVIOUS="ubikcid" NEXT="explanation"/>
+        <FIELD NAME="explanation" TYPE="char" LENGTH="300" NOTNULL="true" SEQUENCE="false" PREVIOUS="word"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="ubikcid"/>
+        <KEY NAME="ubikcid" TYPE="foreign" FIELDS="ubikcid" REFTABLE="ubikc" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="ubikc_questionbank" COMMENT="Defines ubikc_questionbank" PREVIOUS="ubikc_wordexplanation" NEXT="ubikc_process">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="ubikcid"/>
+        <FIELD NAME="ubikcid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="questiontext"/>
+        <FIELD NAME="questiontext" TYPE="text" LENGTH="big" NOTNULL="true" SEQUENCE="false" PREVIOUS="ubikcid" NEXT="choice"/>
+        <FIELD NAME="choice" TYPE="char" LENGTH="300" NOTNULL="false" SEQUENCE="false" PREVIOUS="questiontext" NEXT="answer"/>
+        <FIELD NAME="answer" TYPE="text" LENGTH="big" NOTNULL="true" SEQUENCE="false" PREVIOUS="choice"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="ubikcid"/>
+        <KEY NAME="ubikcid" TYPE="foreign" FIELDS="ubikcid" REFTABLE="ubikc" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="ubikc_process" COMMENT="Defines ubikc_process" PREVIOUS="ubikc_questionbank">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="username"/>
+        <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="process"/>
+        <FIELD NAME="process" TYPE="text" LENGTH="big" NOTNULL="true" SEQUENCE="false" PREVIOUS="username"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
