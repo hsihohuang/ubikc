@@ -20,4 +20,4 @@ Copyright (C) 2012 HsiHo Huang
 Ubikc module
 =============
 
-NOTE: this module is not maintained.
+###### NOTE: this module is not maintained.
