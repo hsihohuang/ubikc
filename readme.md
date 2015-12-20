@@ -21,3 +21,5 @@ Ubikc module
 =============
 
 ###### NOTE: this module is not maintained.
+
+Install
