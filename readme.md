@@ -20,6 +20,9 @@ Copyright (C) 2012 HsiHo Huang
 Ubikc module
 =============
 
-###### NOTE: this module is not maintained.
+###### NOTE: this module is the server-side of Ubiquitous KC system, and it's not maintained.
 
-Install
+**Introduction**
+
+This is a Moodle plugin for Moodle 2.2.2 that allows teachers to create, upload and edit their KC(key concept) for their students
+Students can see the KC not only on their Moodle course page, but also on their smartphone(if they install the U-KC app).
