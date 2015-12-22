@@ -27,4 +27,4 @@ Ubikc module
 This is a Moodle plugin for Moodle 2.2.2 that allows teachers to create, upload and edit their KC(key concept) for their students.<br/>
 Students can see the KC not only on their Moodle course page, but also on their smartphone(if they install the U-KC app).
 
-![Alt text](D:\Dropbox\kkkkk\resume & project\project_pics\ubikc/t4.png)
+![Ubiquitous KC poster](D:\Dropbox\kkkkk\resume & project\project_pics\ubikc\t4.png)
