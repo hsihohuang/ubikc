@@ -22,13 +22,13 @@ Ubikc module
 
 ###### NOTE : this module is the server-side of Ubiquitous KC system, and it's not maintained.
 
-**Introduction**
+##### Introduction
 
 This is a Moodle plugin for Moodle 2.2.2 that allows teachers to create, upload and edit their KC (key concept) for their students.<br/>
 Students can see the KC not only on their Moodle course page, but also on their smartphone (if they install the U-KC app).
 
 ## More about Ubiquitous KC
-**Ubiquitous KC(U-KC)**: It's an ubiquitous learning system which actively provides the personal KC(Key Concept) contents according to individual student's own study progress, subjects and exam schedule.Some screenshots are at the bottom.
+**Ubiquitous KC(U-KC)**: It's an ubiquitous learning system which actively provides the personal KC(Key Concept) contents according to individual student's own study progress, subjects and exam schedule. Some screenshots are at the bottom.
 
 **Server-side of U-KC**: A Moodle module which allows teachers to create, upload and edit their KC contents for their courses.
 
